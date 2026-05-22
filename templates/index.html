@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Cyber Security Quiz</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:black;
+            color:#00ff88;
+            font-family:Consolas;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            overflow-x:hidden;
+            padding:20px;
+        }
+
+        canvas{
+            position:fixed;
+            top:0;
+            left:0;
+            z-index:-1;
+        }
+
+        .container{
+            background:rgba(0,0,0,0.85);
+            width:750px;
+            padding:35px;
+            border-radius:25px;
+            border:2px solid #00ff88;
+            box-shadow:
+            0px 0px 15px #00ff88,
+            0px 0px 40px #00ff88;
+            backdrop-filter:blur(8px);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow{
+
+            from{
+                box-shadow:
+                0px 0px 15px #00ff88,
+                0px 0px 40px #00ff88;
+            }
+
+            to{
+                box-shadow:
+                0px 0px 25px #00ff88,
+                0px 0px 60px #00ff88;
+            }
+
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:20px;
+            font-size:50px;
+            text-shadow:0px 0px 15px #00ff88;
+        }
+
+        .welcome{
+            text-align:center;
+            margin-bottom:20px;
+            font-size:20px;
+        }
+
+        .logout-btn{
+            background:red;
+            color:white;
+        }
+
+        .logout-btn:hover{
+            background:darkred;
+        }
+
+        .timer{
+            text-align:right;
+            margin-bottom:15px;
+            font-size:20px;
+        }
+
+        .progress-bar{
+            width:100%;
+            height:12px;
+            background:#111;
+            border-radius:20px;
+            overflow:hidden;
+            margin-bottom:25px;
+        }
+
+        .progress{
+            width:100%;
+            height:12px;
+            background:#00ff88;
+            animation:progress 30s linear forwards;
+            box-shadow:0px 0px 10px #00ff88;
+        }
+
+        @keyframes progress{
+
+            from{
+                width:100%;
+            }
+
+            to{
+                width:0%;
+            }
+
+        }
+
+        .question{
+            margin-top:30px;
+            line-height:2;
+            font-size:22px;
+            padding:20px;
+            border-radius:15px;
+            transition:0.3s;
+        }
+
+        .question:hover{
+            background:rgba(0,255,136,0.05);
+        }
+
+        input{
+            margin-top:12px;
+            transform:scale(1.3);
+            cursor:pointer;
+        }
+
+        label{
+            margin-left:10px;
+        }
+
+        button{
+            width:100%;
+            padding:16px;
+            margin-top:30px;
+            background:#00ff88;
+            border:none;
+            border-radius:15px;
+            color:black;
+            font-size:20px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+            box-shadow:0px 0px 10px #00ff88;
+        }
+
+        button:hover{
+            background:#00cc66;
+            transform:scale(1.03);
+            box-shadow:0px 0px 20px #00ff88;
+        }
+
+        .score{
+            text-align:center;
+            margin-top:25px;
+            font-size:35px;
+            text-shadow:0px 0px 10px #00ff88;
+        }
+
+        .leaderboard{
+            margin-top:40px;
+            background:rgba(0,255,136,0.05);
+            padding:25px;
+            border-radius:20px;
+            border:1px solid #00ff88;
+        }
+
+        .leaderboard h2{
+            margin-bottom:15px;
+            text-align:center;
+            text-shadow:0px 0px 10px #00ff88;
+        }
+
+        .leaderboard p{
+            margin-top:10px;
+            font-size:20px;
+        }
+
+        .result{
+            text-align:center;
+            margin-top:20px;
+            font-size:26px;
+        }
+
+        .restart-btn{
+            margin-top:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💻 Cyber Security Quiz</h1>
+
+    <div class="welcome">
+        Welcome, {{ user }} 👨‍💻
+    </div>
+
+    <a href="/logout">
+        <button class="logout-btn">
+            Logout
+        </button>
+    </a>
+
+    <div class="timer">
+        ⏱️ Time Left:
+        <span id="time">30</span>s
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress"></div>
+    </div>
+
+    <form method="POST" id="quizForm">
+
+        <!-- QUESTION 1 -->
+
+        <div class="question">
+
+            <p>
+            1. Which SQL Injection attack uses delays
+            to extract information from the database?
+            </p>
+
+            <input type="radio"
+            name="q1"
+            value="Out-of-Band SQL Injection">
+            <label>Out-of-Band SQL Injection</label>
+            <br>
+
+            <input type="radio"
+            name="q1"
+            value="Time-Based Blind SQL Injection">
+            <label>Time-Based Blind SQL Injection</label>
+            <br>
+
+            <input type="radio"
+            name="q1"
+            value="Boolean-Based Blind SQL Injection">
+            <label>Boolean-Based Blind SQL Injection</label>
+
+        </div>
+
+        <!-- QUESTION 2 -->
+
+        <div class="question">
+
+            <p>
+            2. Why is ECB encryption insecure for images?
+            </p>
+
+            <input type="radio"
+            name="q2"
+            value="It introduces a high propagation of errors">
+            <label>High propagation of errors</label>
+            <br>
+
+            <input type="radio"
+            name="q2"
+            value="It encrypts identical plaintext blocks into identical ciphertext blocks">
+            <label>Identical plaintext gives identical ciphertext</label>
+            <br>
+
+            <input type="radio"
+            name="q2"
+            value="It is a stream cipher mode">
+            <label>It is a stream cipher mode</label>
+
+        </div>
+
+        <!-- QUESTION 3 -->
+
+        <div class="question">
+
+            <p>
+            3. What does TOCTOU stand for?
+            </p>
+
+            <input type="radio"
+            name="q3"
+            value="Buffer Overflow">
+            <label>Buffer Overflow</label>
+            <br>
+
+            <input type="radio"
+            name="q3"
+            value="Time-of-Check to Time-of-Use (TOCTOU)">
+            <label>Time-of-Check to Time-of-Use</label>
+            <br>
+
+            <input type="radio"
+            name="q3"
+            value="Server-Side Request Forgery (SSRF)">
+            <label>Server-Side Request Forgery</label>
+
+        </div>
+
+        <button type="submit">
+             Submit Quiz
+        </button>
+
+    </form>
+
+    {% if score is not none %}
+
+        <div class="score">
+            🎯 Score: {{ score }}/3
+        </div>
+
+        <div class="result">
+
+            {% if score == 3 %}
+                🏆 Excellent Cyber Security Knowledge!
+
+            {% elif score == 2 %}
+                🔥 Great Work!
+
+            {% else %}
+                💀 Keep Practicing!
+            {% endif %}
+
+        </div>
+
+        <a href="/">
+            <button class="restart-btn">
+                Restart Quiz
+            </button>
+        </a>
+
+    {% endif %}
+
+    <!-- LEADERBOARD -->
+
+    <div class="leaderboard">
+
+        <h2>🏆 Leaderboard</h2>
+
+        {% for user in leaderboard %}
+
+            <p>
+                👤 {{ user[0] }}
+                —
+                🎯 {{ user[1] }}/3
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- CLICK SOUND -->
+
+<audio id="clickSound">
+    <source
+    src="https://www.soundjay.com/buttons/sounds/button-16.mp3"
+    type="audio/mpeg">
+</audio>
+
+<!-- SUCCESS SOUND -->
+
+<audio id="successSound">
+    <source
+    src="https://www.soundjay.com/buttons/sounds/button-4.mp3"
+    type="audio/mpeg">
+</audio>
+
+<!-- TIMER -->
+
+<script>
+
+let timeLeft = 30;
+
+let timer = setInterval(function(){
+
+    timeLeft--;
+
+    document.getElementById("time").innerHTML = timeLeft;
+
+    if(timeLeft <= 0){
+
+        clearInterval(timer);
+
+        document.getElementById("quizForm").submit();
+    }
+
+},1000);
+
+</script>
+
+<!-- CLICK SOUND -->
+
+<script>
+
+const buttons = document.querySelectorAll("input");
+
+buttons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        document
+        .getElementById("clickSound")
+        .play();
+
+    });
+
+});
+
+</script>
+
+<!-- SUCCESS SOUND -->
+
+<script>
+
+let scoreText = document.querySelector(".score");
+
+if(scoreText){
+
+    if(scoreText.innerText.includes("3/3")){
+
+        document
+        .getElementById("successSound")
+        .play();
+
+    }
+
+}
+
+</script>
+
+<!-- MATRIX EFFECT -->
+
+<script>
+
+const canvas = document.createElement("canvas");
+document.body.appendChild(canvas);
+
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01";
+const fontSize = 14;
+
+const columns = canvas.width/fontSize;
+
+const drops = [];
+
+for(let x=0;x<columns;x++){
+    drops[x]=1;
+}
+
+function draw(){
+
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="#00ff88";
+    ctx.font=fontSize+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+
+        const text =
+        letters[Math.floor(Math.random()*letters.length)];
+
+        ctx.fillText(
+            text,
+            i*fontSize,
+            drops[i]*fontSize
+        );
+
+        if(
+            drops[i]*fontSize > canvas.height
+            &&
+            Math.random() > 0.975
+        ){
+            drops[i]=0;
+        }
+
+        drops[i]++;
+    }
+}
+
+setInterval(draw,33);
+
+</script>
+
+</body>
+
+</html>
